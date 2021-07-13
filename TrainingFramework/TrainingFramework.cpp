@@ -21,15 +21,21 @@ int Init ( ESContext *esContext )
 	Vertex verticesData[3];
 
 	verticesData[0].pos.x =  0.0f;  verticesData[0].pos.y =  0.5f;  verticesData[0].pos.z =  0.0f;
+	verticesData[0].col.x = 1.0f;  verticesData[0].col.y = 0.0f;  verticesData[0].col.z = 0.0f;
 	verticesData[1].pos.x = -0.5f;  verticesData[1].pos.y = -0.5f;  verticesData[1].pos.z =  0.0f;
+	verticesData[1].col.x = 0.0f;  verticesData[1].col.y = 1.0f;  verticesData[1].col.z = 0.0f;
 	verticesData[2].pos.x =  0.5f;  verticesData[2].pos.y = -0.5f;  verticesData[2].pos.z =  0.0f;
+	verticesData[2].col.x = 0.0f;  verticesData[2].col.y = 0.0f;  verticesData[2].col.z = 1.0f;
+	
+	
 	unsigned int indices[] = {  // note that we start from 0!
-		2, 1, 0
+		0, 1, 2
 	};
 	//buffer object
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesData), verticesData, GL_STATIC_DRAW);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(color), color, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glGenBuffers(1, &iboID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
@@ -54,6 +60,10 @@ void Draw ( ESContext *esContext )
 	{
 		glEnableVertexAttribArray(myShaders.positionAttribute);
 		glVertexAttribPointer(myShaders.positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
+	}
+	if (myShaders.colorAttribute != -1) {
+		glEnableVertexAttribArray(myShaders.colorAttribute);
+		glVertexAttribPointer(myShaders.colorAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3*sizeof(GLfloat)));
 	}
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboID);
 	//glDrawArrays(GL_TRIANGLES, 0, 3);
