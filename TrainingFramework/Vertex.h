@@ -5,4 +5,5 @@ struct Vertex
 {
 	Vector3 pos;
 	Vector3 col;
+	Vector2 uv;
 };
