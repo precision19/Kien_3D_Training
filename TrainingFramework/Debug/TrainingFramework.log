@@ -1,3 +1,9 @@
 ﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  TrainingFramework.cpp
+  Model.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(7,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(15,2): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(20,4): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(27,4): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(51,4): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(63,3): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
   TrainingFramework.vcxproj -> C:\Users\Admin\source\repos\Kien_3D_Training\BIN\TrainingFramework.exe
