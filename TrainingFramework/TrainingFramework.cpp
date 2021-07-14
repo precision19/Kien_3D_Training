@@ -93,7 +93,8 @@ void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 void CleanUp()
 {
 	glDeleteBuffers(1, &vboId);
-	//delete model;
+	//model = NULL;
+	model->~Model();
 }
 
 int _tmain(int argc, _TCHAR* argv[])

@@ -73,6 +73,6 @@ void Model::LoadModel(char* filepath) {
 }
 
 Model::~Model() {
-	/*delete verticesData;
-	delete indices;*/
+	delete[] verticesData;
+	delete[] indices;
 }
