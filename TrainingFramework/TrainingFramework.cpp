@@ -9,6 +9,7 @@
 #include "Model.h"
 #include <conio.h>
 #include <fstream>
+#include "Object.h"
 
 GLuint vboId;
 GLuint iboID;
@@ -18,13 +19,24 @@ GLint height;
 GLint bpp;
 Shaders myShaders;
 Model* model = new Model();
+Object* obj = new Object();
 
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
 	//triangle data (heap)
+	glEnable(GL_DEPTH_TEST);
+	obj->InitWVP();
 	char* filepath = "../ResourcesPacket/Models/Woman1.nfg";
 	model->LoadModel(filepath);
+	for (int i = 0; i < model->NrVertices; i++) {
+		Vector4 v4 = { model->verticesData[i].pos, 1.0f };
+		v4 = v4 * obj->WVP;
+		model->verticesData[i].pos.x = v4.x;
+		model->verticesData[i].pos.y = v4.y;
+		model->verticesData[i].pos.z = v4.z;
+		printf("%f %f %f %f\n", v4.x, v4.y, v4.z, v4.w);
+	}
 	//buffer object
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
@@ -44,17 +56,17 @@ int Init ( ESContext *esContext )
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
-	glGenerateMipmap(GL_TEXTURE_2D);
 	delete imageData;
-	glGenerateMipmap(GL_TEXTURE_2D);
+	//glGenerateMipmap(GL_TEXTURE_2D);
 	//creation of shaders and program 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	glBindTexture(GL_TEXTURE_2D, 0); 
+	//glEnable(GL_DEPTH_TEST);
 	return myShaders.Init("../Resources/Shaders/TriangleShaderVS.vs", "../Resources/Shaders/TriangleShaderFS.fs");
 }
 
 void Draw ( ESContext *esContext )
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glUseProgram(myShaders.program);
 
