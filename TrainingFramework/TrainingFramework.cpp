@@ -21,6 +21,7 @@ Shaders myShaders;
 Model* model = new Model();
 Object* obj = new Object();
 
+
 int Init ( ESContext *esContext )
 {
 	glClearColor ( 1.0f, 1.0f, 1.0f, 1.0f );
@@ -29,14 +30,7 @@ int Init ( ESContext *esContext )
 	obj->InitWVP();
 	char* filepath = "../ResourcesPacket/Models/Woman1.nfg";
 	model->LoadModel(filepath);
-	for (int i = 0; i < model->NrVertices; i++) {
-		Vector4 v4 = { model->verticesData[i].pos, 1.0f };
-		v4 = v4 * obj->WVP;
-		model->verticesData[i].pos.x = v4.x;
-		model->verticesData[i].pos.y = v4.y;
-		model->verticesData[i].pos.z = v4.z;
-		printf("%f %f %f %f\n", v4.x, v4.y, v4.z, v4.w);
-	}
+
 	//buffer object
 	glGenBuffers(1, &vboId);
 	glBindBuffer(GL_ARRAY_BUFFER, vboId);
@@ -74,7 +68,8 @@ void Draw ( ESContext *esContext )
 	glBindTexture(GL_TEXTURE_2D, textureID);
 	GLuint iTextureLoc = glGetUniformLocation(myShaders.program, "u_texture");
 	glUniform1i(iTextureLoc, 0);
-	
+	GLint MatrixID = glGetUniformLocation(myShaders.program, "u_WVP");
+	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(obj->WVP.m[0][0]));
 	if(myShaders.positionAttribute != -1)
 	{
 		glEnableVertexAttribArray(myShaders.positionAttribute);
