@@ -89,12 +89,76 @@ void Draw ( ESContext *esContext )
 
 void Update ( ESContext *esContext, float deltaTime )
 {
-
+	obj->Update(deltaTime);
 }
 
 void Key ( ESContext *esContext, unsigned char key, bool bIsPressed)
 {
-
+	//printf("%c\n", key);
+	if (key == 'W') {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.w;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.w;
+		}
+	}
+	if (key == 'A') {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.a;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.a;
+		}
+	}
+	if (key == 'S') {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.s;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.s;
+		}
+	}
+	if (key == 'D') {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.d;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.d;
+		}
+	}
+	if (key == VK_LEFT) {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.leftKey;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.leftKey;
+		}
+	}
+	if (key == VK_RIGHT) {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.rightKey;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.rightKey;
+		}
+	}
+	if (key == VK_UP) {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.upKey;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.upKey;
+		}
+	}
+	if (key == VK_DOWN) {
+		if (bIsPressed) {
+			obj->c.keyPressed = obj->c.keyPressed | obj->c.downKey;
+		}
+		else {
+			obj->c.keyPressed = obj->c.keyPressed ^ obj->c.downKey;
+		}
+	}
 }
 
 void CleanUp()
