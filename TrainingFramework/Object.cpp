@@ -12,23 +12,25 @@ void Object::InitWVP() {
 	m_Translation.SetTranslation(position.x, position.y, position.z);
 	worldMatrix = m_Scale * m_Rotation * m_Translation;
 	//Matrix vMatrix, pMatrix;
-	WVP = worldMatrix * c.caculateViewMatrix() * c.caculatePerspectiveMatrix();
+	WVP = worldMatrix * Camera::GetInstance()->caculateViewMatrix() * Camera::GetInstance()->caculatePerspectiveMatrix();
 }
 
 Object::Object() {
 
 }
 
+Object::~Object() {
+	delete model;
+	//delete shader;
+}
+
 void Object::Update(float frameTime) {
-	c.Update(frameTime);
 	//c.a = 0; c.w = 0; c.d = 0; c.s = 0;
-	if (c.isDirty == 1) {
-		WVP = worldMatrix * c.caculateViewMatrix() * c.getPerspectiveMatrix();
-		c.isDirty = 0;
+	if (Camera::GetInstance()->isDirty == 1) {
+		WVP = worldMatrix * Camera::GetInstance()->caculateViewMatrix() * Camera::GetInstance()->getPerspectiveMatrix();
 	}
 	else {
-		WVP = worldMatrix * c.getViewMatrix() * c.getPerspectiveMatrix();
-		c.isDirty = 0;
+		WVP = worldMatrix * Camera::GetInstance()->getViewMatrix() * Camera::GetInstance()->getPerspectiveMatrix();
 	}
 }
 

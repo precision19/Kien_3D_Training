@@ -3,8 +3,11 @@
 //#include "Vertex.h"
 #include <fstream>
 
-void Model::LoadModel(char* filepath) {
-	FILE* f = fopen(filepath, "r");
+void Model::LoadModel() {
+	char fullpath[200];
+	sprintf(fullpath, "../ResourcesPacket/");
+	sprintf(fullpath + 19, "%s", filepath);
+	FILE* f = fopen(fullpath, "r");
 	if (f == NULL) {
 		printf("Can't found file\n");
 	}

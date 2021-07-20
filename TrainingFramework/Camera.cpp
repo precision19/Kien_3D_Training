@@ -2,7 +2,20 @@
 #include "Camera.h"
 #include <math.h>
 
-Camera::Camera() {
+Camera* Camera::c_Instance = NULL;
+
+Camera* Camera::GetInstance() {
+	if (c_Instance == NULL) {
+		c_Instance = new Camera();
+	}
+	return c_Instance;
+}
+
+Camera::~Camera(void) {
+	printf("%s\n", "Destructor SceneManager");
+}
+
+Camera::Camera(void) {
 	w = 1;
 	a = 1<<3; 
 	s = 1<<1; 
@@ -97,7 +110,8 @@ Vector4 Camera::rotaRight(float deltaTime) {
 	Vector4 localTarget = Vector4(0.0f, 0.0f, -(pos-target).Length(), 1.0f);
 	float angle = -speedRotation * deltaTime;
 	Matrix RotationMatrixAroundY;
-	RotationMatrixAroundY.SetRotationAngleAxis(angle, 0, 1, 0);
+	Vector4 localOy = Vector4(0.0f, 1.0f, 0.0f, 0.0f) * getViewMatrix();
+	RotationMatrixAroundY.SetRotationAngleAxis(angle, localOy.x, localOy.y, localOy.z);
 	Vector4 localNewTarget = localTarget * RotationMatrixAroundY;
 	Vector4 worldNewTarget = localNewTarget * caculateWorldMatrix();
 	return worldNewTarget;
@@ -107,7 +121,8 @@ Vector4 Camera::rotaLeft(float deltaTime) {
 	Vector4 localTarget = Vector4(0.0f, 0.0f, -(pos - target).Length(), 1.0f);
 	float angle = +speedRotation * deltaTime;
 	Matrix RotationMatrixAroundY;
-	RotationMatrixAroundY.SetRotationAngleAxis(angle, 0, 1, 0);
+	Vector4 localOy = Vector4(0.0f, 1.0f, 0.0f, 0.0f) * getViewMatrix();
+	RotationMatrixAroundY.SetRotationAngleAxis(angle, localOy.x, localOy.y, localOy.z);
 	Vector4 localNewTarget = localTarget * RotationMatrixAroundY;
 	Vector4 worldNewTarget = localNewTarget * caculateWorldMatrix();
 	return worldNewTarget;
@@ -121,7 +136,8 @@ Vector4 Camera::rotaUp(float deltaTime) {
 	}
 	angleRotaX = angleRotaX + angle;
 	Matrix RotationMatrixAroundX;
-	RotationMatrixAroundX.SetRotationAngleAxis(angle, 1, 0, 0);
+	Vector4 localOx = Vector4(1.0f, 0.0f, 0.0f, 0.0f) * getViewMatrix();
+	RotationMatrixAroundX.SetRotationAngleAxis(angle, 1.0f, 0.0f, 0.0f);
 	Vector4 localNewTarget = localTarget * RotationMatrixAroundX;
 	Vector4 worldNewTarget = localNewTarget * caculateWorldMatrix();
 	return worldNewTarget;
@@ -135,7 +151,8 @@ Vector4 Camera::rotaDown(float deltaTime) {
 	}
 	angleRotaX = angleRotaX + angle;
 	Matrix RotationMatrixAroundX;
-	RotationMatrixAroundX.SetRotationAngleAxis(angle, 1, 0, 0);
+	Vector4 localOx = Vector4(1.0f, 0.0f, 0.0f, 0.0f) * getViewMatrix();
+	RotationMatrixAroundX.SetRotationAngleAxis(angle, 1.0f, 0.0f, 0.0f);
 	Vector4 localNewTarget = localTarget * RotationMatrixAroundX;
 	Vector4 worldNewTarget = localNewTarget * caculateWorldMatrix();
 	return worldNewTarget;

@@ -1,8 +1,1 @@
-﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
-  Camera.cpp
-C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(8,16): warning C4305: 'initializing': truncation from 'double' to 'GLfloat'
-C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(19,22): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(23,18): warning C4305: 'initializing': truncation from 'double' to 'float'
-C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(24,18): warning C4305: 'initializing': truncation from 'double' to 'float'
-Camera.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
-  TrainingFramework.vcxproj -> C:\Users\Admin\source\repos\Kien_3D_Training\BIN\TrainingFramework.exe
+﻿
