@@ -80,10 +80,18 @@ void ResourceManager::Init() {
 			fscanf(f, "STATES %d\n", &numStates);
 			for (int j = 0; j < numStates; j++) {
 				char nameStates[100];
+				memset(nameStates, 0, sizeof(nameStates));
 				int statusStates;
 				fscanf(f, "%s %d\n", nameStates, &statusStates);
-				(shader[i]->states).push_back(nameStates);
+				if(strcmp(nameStates, "GL_DEPTH_TEST") == 0)
+					(shader[i]->states).push_back("GL_DEPTH_TEST");
+				if (strcmp(nameStates, "GL_CULL_FACE") == 0)
+					(shader[i]->states).push_back("GL_CULL_FACE");
 				(shader[i]->status).push_back(statusStates);
+				printf("%s\n", nameStates);
+			}
+			for (int j = 0; j < numStates; j++) {
+				printf("%s\n", shader[i]->states[j]);
 			}
 		}
 	}

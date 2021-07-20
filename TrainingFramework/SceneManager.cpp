@@ -53,6 +53,64 @@ void SceneManager::Update(float deltaTime) {
 	Camera::GetInstance()->isDirty = 0;
 }
 
+
+int SceneManager::InitShader() {
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//triangle data (heap)
+	for (int i = 0; i < obj.size(); i++) {
+		for (int j = 0; j < obj[i]->shader->status.size(); j++) {
+			if (obj[i]->shader->status[j] == 1) {
+				if (obj[i]->shader->states[j] == "GL_DEPTH_TEST") {
+					glEnable(GL_DEPTH_TEST);
+				}
+				if (obj[i]->shader->states[j] == "GL_CULL_FACE") {
+					glEnable(GL_CULL_FACE);
+				}
+			}																	
+		}
+		obj[i]->InitWVP();
+		obj[i]->model->LoadModel();
+		//buffer object
+		glGenBuffers(1, &(obj[i]->vboId));
+		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
+		glBufferData(GL_ARRAY_BUFFER, obj[i]->model->NrVertices * sizeof(Vertex), obj[i]->model->verticesData, GL_STATIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glGenBuffers(1, &(obj[i]->iboID));
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj[i]->iboID);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj[i]->model->NrIndices * sizeof(unsigned int), obj[i]->model->indices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glGenTextures(1, &(obj[i]->textureID));
+		glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
+		for (int j = 0; j < obj[i]->textures.size(); j++) {
+			char* imageData = LoadTGA(obj[i]->textures[j]->filepath, &width, &height, &bpp);
+			GLuint bppType = GL_RGB;
+			if (bpp == 32) bppType = GL_RGBA;
+			if (strcmp(obj[i]->textures[j]->wrap, "REPEAT") == 0) {
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			}
+			if (strcmp(obj[i]->textures[j]->filter_min, "LINEAR") == 0) {
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			}
+			else if (strcmp(obj[i]->textures[j]->filter_min, "NEAREST") == 0) {
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			}
+			if (strcmp(obj[i]->textures[j]->filter_mag, "LINEAR") == 0) {
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			}
+			else if (strcmp(obj[i]->textures[j]->filter_mag, "NEAREST") == 0) {
+				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			}
+			glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
+			delete imageData;
+		}
+		//creation of shaders and program 
+		glBindTexture(GL_TEXTURE_2D, 0);
+		obj[i]->shader->Init(obj[i]->shader->fileVS, obj[i]->shader->fileFS);
+	}
+	return 0;
+}
+
 void SceneManager::CleanUp() {
 	for (int i = 0; i < obj.size(); i++) {
 		glDeleteBuffers(1, &(obj[i]->vboId));
@@ -134,40 +192,6 @@ void SceneManager::Key(unsigned char key, bool bIsPressed) {
 }
 
 
-int SceneManager::InitShader() {
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	//triangle data (heap)
-	glEnable(GL_DEPTH_TEST);
-	for (int i = 0; i < obj.size(); i++) {
-		obj[i]->InitWVP();
-		obj[i]->model->LoadModel();
-		//buffer object
-		glGenBuffers(1, &(obj[i]->vboId));
-		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
-		glBufferData(GL_ARRAY_BUFFER, obj[i]->model->NrVertices * sizeof(Vertex), obj[i]->model->verticesData, GL_STATIC_DRAW);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glGenBuffers(1, &(obj[i]->iboID));
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj[i]->iboID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj[i]->model->NrIndices * sizeof(unsigned int), obj[i]->model->indices, GL_STATIC_DRAW);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glGenTextures(1, &(obj[i]->textureID));
-		glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
-		char* imageData = LoadTGA(obj[i]->textures[0]->filepath, &width, &height, &bpp);
-		GLuint bppType = GL_RGB;
-		if (bpp == 32) bppType = GL_RGBA;
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
-		delete imageData;
-		//creation of shaders and program 
-		glBindTexture(GL_TEXTURE_2D, 0);
-		obj[i]->shader->Init(obj[i]->shader->fileVS, obj[i]->shader->fileFS);
-	}
-	return 0;
-}
-
 void SceneManager::Init() {
 	FILE* f;
 	f = fopen("../Resources/SM.txt", "r+");
@@ -221,12 +245,9 @@ void SceneManager::Init() {
 	}
 	for (int i = 0; i < obj.size(); i++) {
 		obj[i]->model = ResourceManager::GetInstance()->model[obj[i]->modelID];
-		printf("%s\n", (obj[i]->model)->filepath);
 		obj[i]->shader = ResourceManager::GetInstance()->shader[obj[i]->shaderID];
-		printf("%s\n", (obj[i]->shader)->fileFS);
 		for (int j = 0; j < obj[i]->texturedID.size(); j++) {
 			obj[i]->textures.push_back(ResourceManager::GetInstance()->texture[obj[i]->texturedID[j]]);
-			printf("%s\n", obj[i]->textures[j]->filter_min);
 		}
 	}
 
