@@ -62,6 +62,7 @@ void SceneManager::CleanUp() {
 	}
 	delete s_Instance;
 	delete ResourceManager::r_Instance;
+	delete Camera::c_Instance;
 }
 
 void SceneManager::Key(unsigned char key, bool bIsPressed) {

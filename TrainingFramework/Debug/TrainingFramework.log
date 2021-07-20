@@ -1,1 +1,89 @@
-﻿
+﻿cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  stdafx.cpp
+cl : command line warning D9035: option 'Gm' has been deprecated and will be removed in a future release
+  TrainingFramework.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(27,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(28,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Object.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Object.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Texture.cpp
+  Shaders.cpp
+  SceneManager.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(27,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(28,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Object.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Object.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(23,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(50,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(57,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(141,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(222,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(227,21): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(173,6): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(181,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(184,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(185,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(186,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(187,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(188,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(189,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(190,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(191,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(192,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(195,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(200,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(201,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(202,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(205,5): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(208,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(209,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(210,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(213,5): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(216,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(217,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\SceneManager.cpp(218,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  ResourceManager.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(18,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(21,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(28,6): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(34,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(37,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(40,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(41,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(44,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(47,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(51,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(52,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(56,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(57,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(62,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(63,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(64,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(67,3): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(70,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(75,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(76,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(77,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(78,4): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(80,4): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\ResourceManager.cpp(84,5): warning C4996: 'fscanf': This function or variable may be unsafe. Consider using fscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Object.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(27,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(28,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Object.h(5,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Object.h(6,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Model.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(8,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(9,2): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(10,12): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(18,2): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(23,4): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(30,4): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(54,4): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Model.cpp(66,3): warning C4996: 'sscanf': This function or variable may be unsafe. Consider using sscanf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Camera.cpp
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(27,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+C:\Users\Admin\source\repos\Kien_3D_Training\TrainingFramework\Camera.h(28,18): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
+Camera.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  TrainingFramework.vcxproj -> C:\Users\Admin\source\repos\Kien_3D_Training\BIN\TrainingFramework.exe
