@@ -2,9 +2,10 @@
 #include "../Utilities/Math.h"
 #include <vector>
 #include "Camera.h"
-#include "Model.h";
-#include "Texture.h";
+#include "Model.h"
+#include "Texture.h"
 #include "Shaders.h"
+#include "CubeTexture.h"
 
 class Object {
 private:
@@ -15,7 +16,8 @@ public:
 	Model* model;
 	Shaders* shader;
 	std::vector<Texture*>textures;
-	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID;
+	CubeTexture* cube;
+	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID, numCubes;
 	std::vector<int>texturedID;
 	std::vector<int>lightID;
 	Vector3 position = { 0.0f, 0.0f, 0.0f };
@@ -30,4 +32,5 @@ public:
 	void InitWVP();
 	void Draw();
 	void Update(float deltaTime);
+	void LoadCubeTexture();
 };

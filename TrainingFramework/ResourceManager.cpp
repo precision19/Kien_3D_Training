@@ -21,6 +21,7 @@ ResourceManager::~ResourceManager(void) {
 	for (int i = 0; i < shader.size(); i++) {
 		delete shader[i];
 	}
+	delete cube;
 }
 
 void ResourceManager::Init() {
@@ -63,6 +64,35 @@ void ResourceManager::Init() {
 			strcpy(texture[i]->filter_min, filter_min);
 			strcpy(texture[i]->filter_mag, filter_mag);
 		}
+
+		int numCubes;
+		fscanf(f, "#Cube Textures: %d\n", &numCubes);
+		cube = new CubeTexture();
+		fscanf(f, "ID %d\n", &(cube->cubeTextureID));
+		//filepath textures
+		char filepath[1024];
+		memset(filepath, 0, sizeof(filepath));
+		fscanf(f, "FILE %s\n", filepath);
+		strcpy(cube->filepath, filepath);
+		for (int i = 0; i < 6; i++) {
+			char component[1024];
+			memset(component, 0, sizeof(component));
+			fscanf(f, "COMPONENT %s\n", component);
+			strcpy(cube->fileComponent[i], component);
+		}
+		//wrap textures
+		char wrap[100];
+		memset(wrap, 0, sizeof(wrap));
+		fscanf(f, "WRAP %s\n", wrap);
+		strcpy(cube->wrap, wrap);
+		//filter texures
+		char filter_min[100], filter_mag[100];
+		memset(filter_min, 0, sizeof(filter_min));
+		memset(filter_mag, 0, sizeof(filter_mag));
+		fscanf(f, "FILTER %s %s\n", filter_min, filter_mag);
+		strcpy(cube->filter_min, filter_min);
+		strcpy(cube->filter_mag, filter_mag);
+
 		int numShaders;
 		fscanf(f, "#Shaders: %d\n", &numShaders);
 		for (int i = 0; i < numShaders; i++) {

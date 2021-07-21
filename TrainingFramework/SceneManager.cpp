@@ -23,9 +23,18 @@ void SceneManager::Render() {
 	for (int i = 0; i < obj.size(); i++) {
 		glUseProgram(obj[i]->shader->program);
 		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
-		glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
-		GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_texture");
-		glUniform1i(iTextureLoc, 0);
+		if (obj[i]->numTextures > 0) {
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
+			GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_texture");
+			glUniform1i(iTextureLoc, 0);
+		}
+		if (obj[i]->numCubes > 0) {
+			glEnable(GL_TEXTURE_CUBE_MAP);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID);
+			GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_samplerCubeMap");
+			glUniform1i(iTextureLoc, 0);
+		}
+
 		GLint MatrixID = glGetUniformLocation(obj[i]->shader->program, "u_WVP");
 		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &(obj[i]->WVP.m[0][0]));
 		if (obj[i]->shader->positionAttribute != -1)
@@ -57,17 +66,9 @@ void SceneManager::Update(float deltaTime) {
 int SceneManager::InitShader() {
 	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	//triangle data (heap)
+	glEnable(GL_DEPTH_TEST);
+	glDisable(GL_CULL_FACE);
 	for (int i = 0; i < obj.size(); i++) {
-		for (int j = 0; j < obj[i]->shader->status.size(); j++) {
-			if (obj[i]->shader->status[j] == 1) {
-				if (obj[i]->shader->states[j] == "GL_DEPTH_TEST") {
-					glEnable(GL_DEPTH_TEST);
-				}
-				if (obj[i]->shader->states[j] == "GL_CULL_FACE") {
-					glEnable(GL_CULL_FACE);
-				}
-			}																	
-		}
 		obj[i]->InitWVP();
 		obj[i]->model->LoadModel();
 		//buffer object
@@ -79,33 +80,71 @@ int SceneManager::InitShader() {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, obj[i]->iboID);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj[i]->model->NrIndices * sizeof(unsigned int), obj[i]->model->indices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-		glGenTextures(1, &(obj[i]->textureID));
-		glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
-		for (int j = 0; j < obj[i]->textures.size(); j++) {
-			char* imageData = LoadTGA(obj[i]->textures[j]->filepath, &width, &height, &bpp);
-			GLuint bppType = GL_RGB;
-			if (bpp == 32) bppType = GL_RGBA;
-			if (strcmp(obj[i]->textures[j]->wrap, "REPEAT") == 0) {
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		if (obj[i]->textures.size() > 0) {
+			glGenTextures(1, &(obj[i]->textureID));
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
+			for (int j = 0; j < obj[i]->textures.size(); j++) {
+				char* imageData = LoadTGA(obj[i]->textures[j]->filepath, &width, &height, &bpp);
+				GLuint bppType = GL_RGB;
+				if (bpp == 32) bppType = GL_RGBA;
+				if (strcmp(obj[i]->textures[j]->wrap, "REPEAT") == 0) {
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+				}
+				if (strcmp(obj[i]->textures[j]->filter_min, "LINEAR") == 0) {
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+				}
+				else if (strcmp(obj[i]->textures[j]->filter_min, "NEAREST") == 0) {
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+				}
+				if (strcmp(obj[i]->textures[j]->filter_mag, "LINEAR") == 0) {
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+				}
+				else if (strcmp(obj[i]->textures[j]->filter_mag, "NEAREST") == 0) {
+					glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+				}
+				glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
+				delete imageData;
 			}
-			if (strcmp(obj[i]->textures[j]->filter_min, "LINEAR") == 0) {
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-			}
-			else if (strcmp(obj[i]->textures[j]->filter_min, "NEAREST") == 0) {
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-			}
-			if (strcmp(obj[i]->textures[j]->filter_mag, "LINEAR") == 0) {
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-			}
-			else if (strcmp(obj[i]->textures[j]->filter_mag, "NEAREST") == 0) {
-				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			}
-			glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
-			delete imageData;
+			//creation of shaders and program 
+			glBindTexture(GL_TEXTURE_2D, 0);
 		}
-		//creation of shaders and program 
-		glBindTexture(GL_TEXTURE_2D, 0);
+		if (obj[i]->numCubes > 0) {
+			glGenTextures(1, &(obj[i]->textureID));
+			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID);
+			char* cubePixels[6];
+			GLint wid[6], hei[6], bp[6];
+			for (int j = 0; j < 6; j++)
+			{
+				cubePixels[j] = LoadTGA(obj[i]->cube->fileComponent[j], &wid[j], &hei[j], &bp[j]);
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, wid[j], hei[j], 0, GL_RGB, GL_UNSIGNED_BYTE, cubePixels[j]);
+			}
+			if (strcmp(obj[i]->cube->wrap, "REPEAT") == 0) {
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_REPEAT);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_REPEAT);
+			}
+			else if (strcmp(obj[i]->cube->wrap, "CLAMP") == 0) {
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			}
+			if (strcmp(obj[i]->cube->filter_min, "LINEAR") == 0) {
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			}
+			else if (strcmp(obj[i]->cube->filter_min, "NEAREST") == 0) {
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+			}
+			if (strcmp(obj[i]->cube->filter_mag, "LINEAR") == 0) {
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			}
+			else if (strcmp(obj[i]->cube->filter_mag, "NEAREST") == 0) {
+				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+			}
+			for (int j = 0; j < 6; j++) {
+				delete cubePixels[j];
+			}
+			glBindTexture(GL_TEXTURE_CUBE_MAP, 0);
+			//obj[i]->cube->LoadCubeTexture();
+		}
 		obj[i]->shader->Init(obj[i]->shader->fileVS, obj[i]->shader->fileFS);
 	}
 	return 0;
@@ -229,7 +268,7 @@ void SceneManager::Init() {
 				fscanf(f, "TEXTURE %d\n", &indexTexture);
 				obj[index]->texturedID.push_back(indexTexture);
 			}
-			fscanf(f, "CUBETEXTURES %d\n", &obj[index]->cubetexturesID);
+			fscanf(f, "CUBETEXTURES %d\n", &obj[index]->numCubes);
 			fscanf(f, "SHADER %d\n", &obj[index]->shaderID);
 			fscanf(f, "LIGHTS %d\n", &obj[index]->numLights);
 			for (int i = 0; i < obj[index]->numLights; i++) {
@@ -248,6 +287,10 @@ void SceneManager::Init() {
 		obj[i]->shader = ResourceManager::GetInstance()->shader[obj[i]->shaderID];
 		for (int j = 0; j < obj[i]->texturedID.size(); j++) {
 			obj[i]->textures.push_back(ResourceManager::GetInstance()->texture[obj[i]->texturedID[j]]);
+		}
+		if (obj[i]->numCubes > 0) {
+			obj[i]->cube = ResourceManager::GetInstance()->cube;
+			printf(obj[i]->cube->wrap);
 		}
 	}
 

@@ -16,7 +16,7 @@ void Object::InitWVP() {
 }
 
 Object::Object() {
-
+	numCubes = 0; numLights = 0; numTextures = 0;
 }
 
 Object::~Object() {
@@ -33,4 +33,5 @@ void Object::Update(float frameTime) {
 		WVP = worldMatrix * Camera::GetInstance()->getViewMatrix() * Camera::GetInstance()->getPerspectiveMatrix();
 	}
 }
+
 
