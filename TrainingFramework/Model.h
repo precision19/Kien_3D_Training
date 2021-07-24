@@ -2,6 +2,8 @@
 #include "Vertex.h"
 class Model {
 public:
+	float scale;
+	int offset;
 	int modelID;
 	char filepath[200];
 	int NrVertices;

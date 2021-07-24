@@ -51,6 +51,9 @@
     <ClCompile Include="CubeTexture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="HeightMap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Globals.h">
@@ -89,6 +92,9 @@
     <ClInclude Include="CubeTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HeightMap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shaders\TriangleShaderFS.fs">
@@ -102,6 +108,12 @@
       <Filter>Resources\Shaders</Filter>
     </None>
     <None Include="..\Resources\Shaders\Skybox.vs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\Terrain.fs">
+      <Filter>Resources\Shaders</Filter>
+    </None>
+    <None Include="..\Resources\Shaders\Terrain.vs">
       <Filter>Resources\Shaders</Filter>
     </None>
   </ItemGroup>

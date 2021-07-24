@@ -40,6 +40,10 @@ void ResourceManager::Init() {
 			memset(filepath, 0, sizeof(filepath));
 			fscanf(f, "FILE %s\n", filepath);
 			strcpy(model[i]->filepath, filepath);
+			/*if (strstr(filepath, "heightmap") != NULL) {
+				fscanf(f, "SCALE %f\n", &model[i]->scale);
+				fscanf(f, "OFFSET %d\n", &model[i]->offset);
+			}*/
 		}
 		int numTextures;
 		fscanf(f, "#2D Textures: %d\n", &numTextures);

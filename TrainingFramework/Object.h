@@ -12,12 +12,15 @@ private:
 	Matrix worldMatrix;
 	Matrix scaleMatrix;
 public:
-	GLuint vboId, textureID, iboID;
+	char type[20]; 
+	GLuint vboId, iboID;
+	GLuint textureID[5];
 	Model* model;
 	Shaders* shader;
 	std::vector<Texture*>textures;
 	CubeTexture* cube;
-	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID, numCubes;
+	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID, numCubes, tiling, fog_start, fog_length;
+	Vector3 fog_color;;
 	std::vector<int>texturedID;
 	std::vector<int>lightID;
 	Vector3 position = { 0.0f, 0.0f, 0.0f };

@@ -23,14 +23,37 @@ void SceneManager::Render() {
 	for (int i = 0; i < obj.size(); i++) {
 		glUseProgram(obj[i]->shader->program);
 		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
-		if (obj[i]->numTextures > 0) {
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
+		if (obj[i]->numTextures == 1) {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[0]);
 			GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_texture");
 			glUniform1i(iTextureLoc, 0);
 		}
+		else if (obj[i]->numTextures > 1) {
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[0]);
+			GLuint l1 = glGetUniformLocation(obj[i]->shader->program, "u_texture0");
+			glUniform1i(l1, 0);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[1]);
+			GLuint l2 = glGetUniformLocation(obj[i]->shader->program, "u_texture1");
+			glUniform1i(l2, 1);
+			glActiveTexture(GL_TEXTURE2);
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[2]);
+			GLuint l3 = glGetUniformLocation(obj[i]->shader->program, "u_texture2");
+			glUniform1i(l3, 2);
+			glActiveTexture(GL_TEXTURE3);
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[3]);
+			GLuint l4 = glGetUniformLocation(obj[i]->shader->program, "u_texture3");
+			glUniform1i(l4, 3);
+			glActiveTexture(GL_TEXTURE4);
+			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[3]);
+			GLuint l5 = glGetUniformLocation(obj[i]->shader->program, "heightmap");
+			glUniform1i(l5, 4);
+		}
 		if (obj[i]->numCubes > 0) {
 			glEnable(GL_TEXTURE_CUBE_MAP);
-			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID);
+			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID[0]);
 			GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_samplerCubeMap");
 			glUniform1i(iTextureLoc, 0);
 		}
@@ -42,7 +65,7 @@ void SceneManager::Render() {
 			glEnableVertexAttribArray(obj[i]->shader->positionAttribute);
 			glVertexAttribPointer(obj[i]->shader->positionAttribute, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 		}
-		if (obj[i]->shader->uvAttribute != -1) {
+		if (obj[i]->shader->uvAttribute != -1) {	
 			glEnableVertexAttribArray(obj[i]->shader->uvAttribute);
 			glVertexAttribPointer(obj[i]->shader->uvAttribute, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(3 * sizeof(GLfloat)));
 		}
@@ -51,6 +74,7 @@ void SceneManager::Render() {
 		glDrawElements(GL_TRIANGLES, obj[i]->model->NrIndices, GL_UNSIGNED_INT, (void*)0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		glDisable(GL_TEXTURE_2D);
 	}
 }
 
@@ -81,9 +105,10 @@ int SceneManager::InitShader() {
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, obj[i]->model->NrIndices * sizeof(unsigned int), obj[i]->model->indices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		if (obj[i]->textures.size() > 0) {
-			glGenTextures(1, &(obj[i]->textureID));
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID);
 			for (int j = 0; j < obj[i]->textures.size(); j++) {
+				//glActiveTexture(GL_TEXTURE0 + j);
+				glGenTextures(1, &(obj[i]->textureID[j]));
+				glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[j]);
 				char* imageData = LoadTGA(obj[i]->textures[j]->filepath, &width, &height, &bpp);
 				GLuint bppType = GL_RGB;
 				if (bpp == 32) bppType = GL_RGBA;
@@ -105,19 +130,18 @@ int SceneManager::InitShader() {
 				}
 				glTexImage2D(GL_TEXTURE_2D, 0, bppType, width, height, 0, bppType, GL_UNSIGNED_BYTE, imageData);
 				delete imageData;
+				glBindTexture(GL_TEXTURE_2D, 0);
 			}
 			//creation of shaders and program 
-			glBindTexture(GL_TEXTURE_2D, 0);
 		}
 		if (obj[i]->numCubes > 0) {
-			glGenTextures(1, &(obj[i]->textureID));
-			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID);
+			glGenTextures(1, &(obj[i]->textureID[0]));
+			glBindTexture(GL_TEXTURE_CUBE_MAP, obj[i]->textureID[0]);
 			char* cubePixels[6];
-			GLint wid[6], hei[6], bp[6];
 			for (int j = 0; j < 6; j++)
 			{
-				cubePixels[j] = LoadTGA(obj[i]->cube->fileComponent[j], &wid[j], &hei[j], &bp[j]);
-				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, wid[j], hei[j], 0, GL_RGB, GL_UNSIGNED_BYTE, cubePixels[j]);
+				cubePixels[j] = LoadTGA(obj[i]->cube->fileComponent[j], &width, &height, &bpp);
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + j, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, cubePixels[j]);
 			}
 			if (strcmp(obj[i]->cube->wrap, "REPEAT") == 0) {
 				glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -151,10 +175,10 @@ int SceneManager::InitShader() {
 }
 
 void SceneManager::CleanUp() {
-	for (int i = 0; i < obj.size(); i++) {
+	for (int i = 0; i < obj.size()-1; i++) {
 		glDeleteBuffers(1, &(obj[i]->vboId));
 		glDeleteBuffers(1, &(obj[i]->iboID));
-		glDeleteBuffers(1, &(obj[i]->textureID));
+		glDeleteBuffers(1, &(obj[i]->textureID[0]));
 		delete obj[i];
 	}
 	delete s_Instance;
@@ -261,6 +285,7 @@ void SceneManager::Init() {
 		while (numObj--) {
 			obj.push_back(new Object());
 			fscanf(f, "ID %d %s\n", &obj[index]->objectID, tmp);
+			strcpy(obj[index]->type, tmp);
 			fscanf(f, "MODEL %d\n", &obj[index]->modelID);
 			fscanf(f, "TEXTURES %d\n", &obj[index]->numTextures);
 			for (int i = 0; i < obj[index]->numTextures; i++) {
@@ -279,6 +304,12 @@ void SceneManager::Init() {
 			fscanf(f, "POSITION %f %f %f\n", &(obj[index]->position.x), &(obj[index]->position.y), &(obj[index]->position.z));
 			fscanf(f, "ROTATION %f %f %f\n", &(obj[index]->rotation.x), &(obj[index]->rotation.y), &(obj[index]->rotation.z));
 			fscanf(f, "SCALE %f %f %f\n", &(obj[index]->scale.x), &(obj[index]->scale.y), &(obj[index]->scale.z));
+			if (strcmp(obj[index]->type, "Terrain") == 0) {
+				fscanf(f, "TILING %d\n", &obj[index]->tiling);
+				fscanf(f, "FOG_START %d\n", &obj[index]->fog_start);
+				fscanf(f, "FOG_LENGTH %d\n", &obj[index]->fog_length);
+				fscanf(f, "FOG_COLOR %d %d %d\n", &obj[index]->fog_color.x, &obj[index]->fog_color.y, &obj[index]->fog_color.z);
+			}
 			index++;
 		}
 	}
