@@ -175,7 +175,7 @@ int SceneManager::InitShader() {
 }
 
 void SceneManager::CleanUp() {
-	for (int i = 0; i < obj.size()-1; i++) {
+	for (int i = 0; i < obj.size(); i++) {
 		glDeleteBuffers(1, &(obj[i]->vboId));
 		glDeleteBuffers(1, &(obj[i]->iboID));
 		glDeleteBuffers(1, &(obj[i]->textureID[0]));
