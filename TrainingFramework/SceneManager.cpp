@@ -50,6 +50,21 @@ void SceneManager::Render() {
 			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[3]);
 			GLuint l5 = glGetUniformLocation(obj[i]->shader->program, "heightmap");
 			glUniform1i(l5, 4);
+			GLint lerp = glGetUniformLocation(obj[i]->shader->program, "lerp");
+			if (lerp != -1) {
+				Vector3 posCam = Camera::GetInstance()->pos;
+				Vector3 posObj = obj[i]->position;
+				float disToCamera = sqrt((posCam.x - posObj.x) * (posCam.x - posObj.x) + (posCam.y - posObj.y) * (posCam.y - posObj.y) + (posCam.z - posObj.z));
+				float fog_start = obj[i]->fog_start;
+				float fog_length = obj[i]->fog_length;
+				glUniform1f(lerp, (disToCamera-fog_start)/fog_length);
+			}
+			GLint fogColor = glGetUniformLocation(obj[i]->shader->program, "fogColor");
+			if (fogColor != -1) {
+				Vector3 color = obj[i]->fog_color;
+				glUniform4f(fogColor, color.x, color.y, color.z, 1.0);
+			}
+			//printf("%f %f\n", obj[i]->fog_start, obj[i]->fog_length);
 		}
 		if (obj[i]->numCubes > 0) {
 			glEnable(GL_TEXTURE_CUBE_MAP);
@@ -178,7 +193,6 @@ void SceneManager::CleanUp() {
 	for (int i = 0; i < obj.size(); i++) {
 		glDeleteBuffers(1, &(obj[i]->vboId));
 		glDeleteBuffers(1, &(obj[i]->iboID));
-		glDeleteBuffers(1, &(obj[i]->textureID[0]));
 		delete obj[i];
 	}
 	delete s_Instance;
@@ -306,9 +320,10 @@ void SceneManager::Init() {
 			fscanf(f, "SCALE %f %f %f\n", &(obj[index]->scale.x), &(obj[index]->scale.y), &(obj[index]->scale.z));
 			if (strcmp(obj[index]->type, "Terrain") == 0) {
 				fscanf(f, "TILING %d\n", &obj[index]->tiling);
-				fscanf(f, "FOG_START %d\n", &obj[index]->fog_start);
-				fscanf(f, "FOG_LENGTH %d\n", &obj[index]->fog_length);
-				fscanf(f, "FOG_COLOR %d %d %d\n", &obj[index]->fog_color.x, &obj[index]->fog_color.y, &obj[index]->fog_color.z);
+				fscanf(f, "FOG_START %f\n", &obj[index]->fog_start);
+				fscanf(f, "FOG_LENGTH %f\n", &obj[index]->fog_length);
+				fscanf(f, "FOG_COLOR %f %f %f\n", &obj[index]->fog_color.x, &obj[index]->fog_color.y, &obj[index]->fog_color.z);
+				printf("%f %f\n", obj[index]->fog_start, obj[index]->fog_length);
 			}
 			index++;
 		}

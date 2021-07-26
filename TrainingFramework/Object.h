@@ -19,7 +19,8 @@ public:
 	Shaders* shader;
 	std::vector<Texture*>textures;
 	CubeTexture* cube;
-	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID, numCubes, tiling, fog_start, fog_length;
+	int modelID, numTextures, cubetexturesID, shaderID, numLights, objectID, numCubes, tiling;
+	float fog_start, fog_length;
 	Vector3 fog_color;;
 	std::vector<int>texturedID;
 	std::vector<int>lightID;
