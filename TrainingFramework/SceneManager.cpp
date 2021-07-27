@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "SceneManager.h"
 #include "Object.h"
+#include <map>
 
 SceneManager* SceneManager::s_Instance = NULL;
 SceneManager::SceneManager(void) {
@@ -23,33 +24,23 @@ void SceneManager::Render() {
 	for (int i = 0; i < obj.size(); i++) {
 		glUseProgram(obj[i]->shader->program);
 		glBindBuffer(GL_ARRAY_BUFFER, obj[i]->vboId);
-		if (obj[i]->numTextures == 1) {
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[0]);
-			GLuint iTextureLoc = glGetUniformLocation(obj[i]->shader->program, "u_texture");
-			glUniform1i(iTextureLoc, 0);
-		}
-		else if (obj[i]->numTextures > 1) {
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[0]);
-			GLuint l1 = glGetUniformLocation(obj[i]->shader->program, "u_texture0");
-			glUniform1i(l1, 0);
-			glActiveTexture(GL_TEXTURE1);
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[1]);
-			GLuint l2 = glGetUniformLocation(obj[i]->shader->program, "u_texture1");
-			glUniform1i(l2, 1);
-			glActiveTexture(GL_TEXTURE2);
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[2]);
-			GLuint l3 = glGetUniformLocation(obj[i]->shader->program, "u_texture2");
-			glUniform1i(l3, 2);
-			glActiveTexture(GL_TEXTURE3);
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[3]);
-			GLuint l4 = glGetUniformLocation(obj[i]->shader->program, "u_texture3");
-			glUniform1i(l4, 3);
-			glActiveTexture(GL_TEXTURE4);
-			glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[3]);
-			GLuint l5 = glGetUniformLocation(obj[i]->shader->program, "heightmap");
-			glUniform1i(l5, 4);
+		if (obj[i]->numTextures >= 1) {
+			int n = obj[i]->numTextures;
+			map<int, char[10]> tex;
+			for (int j = 0; j < n; j++) {
+				memset(tex[j], 0, sizeof(tex[j]));
+				strcpy(tex[j], "u_texture");
+				tex[j][9] = j + '0';
+				tex[j][10] = '\0';
+				//printf("%s\n", tex[j]);
+			}
+			GLuint *l = new GLuint[n];
+			for (int j = 0; j < obj[i]->numTextures; j++) {
+				glActiveTexture(GL_TEXTURE0 + j);
+				glBindTexture(GL_TEXTURE_2D, obj[i]->textureID[j]);
+				l[j] = glGetUniformLocation(obj[i]->shader->program, tex[j]);
+				glUniform1i(l[j], j);
+			}
 			GLint lerp = glGetUniformLocation(obj[i]->shader->program, "lerp");
 			if (lerp != -1) {
 				Vector3 posCam = Camera::GetInstance()->pos;
@@ -64,6 +55,7 @@ void SceneManager::Render() {
 				Vector3 color = obj[i]->fog_color;
 				glUniform4f(fogColor, color.x, color.y, color.z, 1.0);
 			}
+			delete[] l;
 			//printf("%f %f\n", obj[i]->fog_start, obj[i]->fog_length);
 		}
 		if (obj[i]->numCubes > 0) {
@@ -107,6 +99,7 @@ int SceneManager::InitShader() {
 	//triangle data (heap)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
+	glEnable(GL_BLEND);
 	for (int i = 0; i < obj.size(); i++) {
 		obj[i]->InitWVP();
 		obj[i]->model->LoadModel();
